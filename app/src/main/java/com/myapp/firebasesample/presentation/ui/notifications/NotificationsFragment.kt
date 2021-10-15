@@ -1,4 +1,4 @@
-package com.myapp.firebasesample.ui.notifications
+package com.myapp.firebasesample.presentation.ui.notifications
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.myapp.firebasesample.R
 import com.myapp.firebasesample.databinding.FragmentNotificationsBinding
 
 class NotificationsFragment : Fragment() {
