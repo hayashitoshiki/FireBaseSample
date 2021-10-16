@@ -4,41 +4,60 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import es.dmoral.toasty.Toasty
 import com.myapp.firebasesample.databinding.FragmentHomeBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
+    private val viewModel: HomeViewModel by viewModel()
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+        setEvent()
+        setEffect()
+        return binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+    }
+
+    // イベント設定
+    private fun setEvent() {
+        binding.btnSignIn.setOnClickListener { viewModel.signIn() }
+        binding.btnSignOut.setOnClickListener { viewModel.signOut() }
+        binding.btnSignUp.setOnClickListener { viewModel.signUp() }
+        binding.btnDelete.setOnClickListener { viewModel.delete() }
+    }
+
+    // エフェクト設定
+    private fun setEffect() {
+        viewModel.errorEffect.observe(viewLifecycleOwner, { if (it.isNotEmpty()) showError(it) })
+        viewModel.successEffect.observe(viewLifecycleOwner, { if (it.isNotEmpty())showSuccess(it) })
+
+    }
+
+    // 成功トースト表示
+    private fun showSuccess(message: String) {
+        Toasty.success(requireContext(), message, Toast.LENGTH_SHORT, true).show()
+    }
+
+    // 失敗トースト表示
+    private fun showError(message: String) {
+        Toasty.error(requireContext(), message, Toast.LENGTH_SHORT, true).show()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        viewModel.onDestroy()
         _binding = null
     }
 }
