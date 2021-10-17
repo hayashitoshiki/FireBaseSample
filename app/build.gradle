@@ -53,6 +53,8 @@ dependencies {
     // firebase_認証
     implementation 'com.google.firebase:firebase-analytics:19.0.2'
     implementation 'com.google.firebase:firebase-auth:21.0.1'
+    // cloud firestore
+    implementation 'com.google.firebase:firebase-firestore-ktx'
     // firebase_push通知
     implementation "com.google.firebase:firebase-messaging:22.0.0"
     implementation 'com.google.firebase:firebase-analytics-ktx'

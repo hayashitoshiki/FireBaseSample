@@ -8,6 +8,9 @@ class RemoteAccountRepositoryImp(private val fireBaseService: FireBaseService): 
     //　自動認証
     override fun autoAuth(): Boolean = fireBaseService.firstCheck()
 
+    // メールアドレス取得
+    override fun getEmail(): String = fireBaseService.getEmail()
+
     // ログイン
     override suspend fun signIn(email: String, password: String) {
         fireBaseService.signIn(email, password)

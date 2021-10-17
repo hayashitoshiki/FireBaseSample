@@ -14,6 +14,13 @@ interface RemoteAccountRepository {
     fun autoAuth(): Boolean
 
     /**
+     * メールアドレス取得
+     *
+     * @return メールアドレス
+     */
+    fun getEmail(): String
+
+    /**
      * ログイン
      *
      * @param email メールアドレス

@@ -4,9 +4,13 @@ import android.app.Application
 import com.myapp.firebasesample.data.remote.FireBaseService
 import com.myapp.firebasesample.data.remote.FireBaseServiceImp
 import com.myapp.firebasesample.data.repository.RemoteAccountRepositoryImp
+import com.myapp.firebasesample.data.repository.RemoteEmployeeRepositoryImp
+import com.myapp.firebasesample.data.repository.RemoteMemoRepositoryImp
 import com.myapp.firebasesample.domain.repository.RemoteAccountRepository
-import com.myapp.firebasesample.domain.usecase.AuthUseCase
-import com.myapp.firebasesample.domain.usecase.AuthUseCaseImp
+import com.myapp.firebasesample.domain.repository.RemoteEmployeeRepository
+import com.myapp.firebasesample.domain.repository.RemoteMemoRepository
+import com.myapp.firebasesample.domain.usecase.*
+import com.myapp.firebasesample.presentation.ui.dashboard.DashboardViewModel
 import com.myapp.firebasesample.presentation.ui.home.HomeViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -36,12 +40,20 @@ class MyApplication : Application() {
     // Koinモジュール
     private val module: Module = module {
 
+        // viewModel
         viewModel { HomeViewModel(get()) }
+        viewModel { DashboardViewModel(get()) }
 
+        // UseCase
         factory<AuthUseCase> { AuthUseCaseImp(get()) }
+        factory<CouldFireStoreUseCase> { CouldFireStoreUseCaseImp(get(), get(), get()) }
 
+        // Repository
+        factory<RemoteMemoRepository> { RemoteMemoRepositoryImp(get()) }
         factory<RemoteAccountRepository> { RemoteAccountRepositoryImp(get()) }
+        factory<RemoteEmployeeRepository> { RemoteEmployeeRepositoryImp(get()) }
 
+        // service
         single<FireBaseService> { FireBaseServiceImp() }
     }
 }
