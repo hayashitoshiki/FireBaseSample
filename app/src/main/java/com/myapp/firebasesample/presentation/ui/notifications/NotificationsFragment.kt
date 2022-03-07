@@ -4,15 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.myapp.firebasesample.databinding.FragmentNotificationsBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import android.content.Intent
+import android.provider.Settings
+import com.myapp.firebasesample.domain.usecase.NotificationUseCase
+
 
 class NotificationsFragment : Fragment() {
 
-    private lateinit var notificationsViewModel: NotificationsViewModel
+    private val viewModel: NotificationsViewModel by viewModel()
     private var _binding: FragmentNotificationsBinding? = null
 
     // This property is only valid between onCreateView and
@@ -24,16 +27,24 @@ class NotificationsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        notificationsViewModel =
-            ViewModelProvider(this).get(NotificationsViewModel::class.java)
 
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+        binding.switch2.also{ switch2 ->
+            switch2.setOnCheckedChangeListener { _, checked -> viewModel.changeFcm(checked) }
+            viewModel.fcmText.observe(viewLifecycleOwner, Observer { switch2.text = it })
+            viewModel.isFcmChecked.observe(viewLifecycleOwner, Observer { switch2.isChecked = it })
+        }
+
+        binding.button1.setOnClickListener {
+            val i = Intent()
+            i.action = Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS
+            i.putExtra(Settings.EXTRA_APP_PACKAGE,  requireContext().packageName)
+            i.putExtra(Settings.EXTRA_CHANNEL_ID,  NotificationUseCase.CHANNEL_ID)
+            requireContext().startActivity(i)
+        }
+
         return root
     }
 
