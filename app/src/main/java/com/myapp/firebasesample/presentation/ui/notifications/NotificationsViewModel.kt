@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.myapp.firebasesample.domain.usecase.NotificationUseCase
+import com.myapp.firebasesample.domain.usecase.SettingUseCase
 
-class NotificationsViewModel(private val notificationUseCase: NotificationUseCase) : ViewModel() {
+class NotificationsViewModel(private val settingUseCase: SettingUseCase) : ViewModel() {
 
     private val _fcmText = MediatorLiveData<String>()
     val fcmText: LiveData<String> = _fcmText
@@ -14,7 +14,7 @@ class NotificationsViewModel(private val notificationUseCase: NotificationUseCas
     val isFcmChecked: LiveData<Boolean> = _fcmChecked
 
     init {
-        _fcmChecked.value = notificationUseCase.getImportance()
+        _fcmChecked.value = settingUseCase.getFcmEnable()
         _fcmText.addSource(isFcmChecked) {
             _fcmText.value = if (it) { "ON" } else { "OFF" }
         }
@@ -23,7 +23,7 @@ class NotificationsViewModel(private val notificationUseCase: NotificationUseCas
     // 切り替え
     fun changeFcm(flg: Boolean) {
         _fcmChecked.value = flg
-        notificationUseCase.setEnable(flg)
+        settingUseCase.setFcmEnable(flg)
     }
 
 }

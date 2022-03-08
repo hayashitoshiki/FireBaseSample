@@ -22,7 +22,7 @@
         </activity>
 
         <service
-            android:name="com.myapp.firebasesample.domain.usecase.NotificationUseCase"
+            android:name="com.myapp.firebasesample.presentation.util.FcmService"
             android:exported="false"
             android:enabled="true">
             <intent-filter>

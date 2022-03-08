@@ -10,7 +10,7 @@ import com.myapp.firebasesample.databinding.FragmentNotificationsBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.content.Intent
 import android.provider.Settings
-import com.myapp.firebasesample.domain.usecase.NotificationUseCase
+import com.myapp.firebasesample.presentation.util.NoticeManager
 
 
 class NotificationsFragment : Fragment() {
@@ -41,7 +41,7 @@ class NotificationsFragment : Fragment() {
             val i = Intent()
             i.action = Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS
             i.putExtra(Settings.EXTRA_APP_PACKAGE,  requireContext().packageName)
-            i.putExtra(Settings.EXTRA_CHANNEL_ID,  NotificationUseCase.CHANNEL_ID)
+            i.putExtra(Settings.EXTRA_CHANNEL_ID, NoticeManager.CHANNELS.FCM.id)
             requireContext().startActivity(i)
         }
 

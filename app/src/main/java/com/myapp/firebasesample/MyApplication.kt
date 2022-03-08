@@ -52,8 +52,7 @@ class MyApplication : Application() {
         // UseCase
         factory<AuthUseCase> { AuthUseCaseImp(get()) }
         factory<CouldFireStoreUseCase> { CouldFireStoreUseCaseImp(get(), get(), get()) }
-        //factory<NotificationUseCase> { NotificationUseCase(get()) }
-        factory<NotificationUseCase> { NotificationUseCase() }
+        factory<SettingUseCase> { SettingUseCaseImp(get()) }
 
 
         // Repository
