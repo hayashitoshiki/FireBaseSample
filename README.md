@@ -1,6 +1,9 @@
 # FireBaseSample
 FireBase関連サンプルメモ
 
+* 全体ソース  
+https://github.com/hayashitoshiki/FireBaseSample/tree/master/app/src/main/java/com/myapp/firebasesample
+
 * 認証
 https://github.com/hayashitoshiki/FireBaseSample/blob/master/app/src/main/java/com/myapp/firebasesample/data/remote/FireBaseServiceImp.kt
 
@@ -8,4 +11,4 @@ https://github.com/hayashitoshiki/FireBaseSample/blob/master/app/src/main/java/c
 https://github.com/hayashitoshiki/FireBaseSample/blob/master/app/src/main/java/com/myapp/firebasesample/data/remote/FireBaseServiceImp.kt
 
 * Push通知
-https://github.com/hayashitoshiki/FireBaseSample/blob/master/app/src/main/java/com/myapp/firebasesample/domain/usecase/NotificationUseCase.kt
+https://github.com/hayashitoshiki/FireBaseSample/blob/master/app/src/main/java/com/myapp/firebasesample/presentation/util/FcmService.kt
